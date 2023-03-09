@@ -1,5 +1,0 @@
-# Buildwarning-Parser
-
-## Usage
-
-## Installation
