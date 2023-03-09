@@ -4,9 +4,13 @@
   :license ""
   :depends-on (:clingon)
   :components ((:module "src"
+		:pathname #P"src/"
                 :components
                 ((:file "main"))))
   :description ""
+  :build-operation "program-op"
+  :build-pathname "build/buildwarning-parser"
+  :entry-point "buildwarning-parser:main"
   :in-order-to ((test-op (test-op "buildwarning-parser/tests"))))
 
 (defsystem "buildwarning-parser/tests"

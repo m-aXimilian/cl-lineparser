@@ -1,5 +1,51 @@
+#+startup: indent
 * Buildwarning-Parser 
+A simple filter that finds occurrences of a sting in a textfile of many lines. It is doing its thing line-by-line, so the whole file is not bloated into memory. Text formatting is assumed to be ~iso-8859-1~.
+
+** Loading development environment
+In a SLIME-repl do the following:
+#+begin_src lisp :exports code
+  (asdf:load-asd #P"d:/Projects/buildwarning-parser/buildwarning-parser.asd") ;; or wherever the asd file is located
+  ;; (asdf:load-system "buildwarning-parser") ;; not needed!
+  (ql:quickload "buildwarning-parser")
+#+end_src
+
 
 ** Usage
+*** From the repl
+The method ~duplicate-free-warnings~ can be used as an entry point directly. Pass it a string for the warning id and one for the path to the input file with all buildwarnings.
+#+begin_src lisp :exports code
+  (duplicate-free-warnings "CA2016" "d:/buildwarnings/ca2016-secondfix")
+#+end_src
+*** From the commandline
+The executable accepts 2 commandline options via ~-w~ (warning id) and ~i~ (the input file with the complete buildresult output).
 
-** Installation
+~w~ is basically any string, so this will filter any line in any file, that contains the warning id string.
+
+e.g.:
+#+begin_src sh
+  ./buildwarning-parser.exe -w CA2016 -i ../static/ca2016-secondfix
+#+end_src
+
+** Building
+1. Start ~sbcl~ from the command line
+   #+begin_src sh :exports code
+     sbcl
+   #+end_src
+2. Load the asdf-system
+   #+begin_src lisp  :exports code
+     (asdf:load-asd #P"d:/Projects/buildwarning-parser/buildwarning-parser.asd") ;; or wherever the asd file is located
+   #+end_src
+3. Quickload it
+   #+begin_src lisp :exports code
+     (ql:quickload "buildwarning-parser")   
+   #+end_src
+4. Use ~asdf:make~ or ~(sb-ext:save-lisp-and-die)~ to make an executable
+   #+begin_src lisp :exports code
+     (asdf:make :buildwarning-parser)
+     ;; way easier via asdf...
+     ;; (sb-ext:save-lisp-and-die #P"d:/Projects/buildwarning-parser/build/buildwarning-parser" :toplevel #'buildwarning-parser:main :executable t)
+   #+end_src
+   
+
+
