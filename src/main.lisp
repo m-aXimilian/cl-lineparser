@@ -20,8 +20,12 @@
 
 (defun duplicate-free-warnings (w f d)
   "Uses the list of warning-filter based on warning W and input file F, removes duplicates in this, and drops everything in the output list after string D."
-  (let ((raw-dup-free (remove-duplicates (warning-filter w f) :test #'string-equal :from-end t)))
-    (mapcar #'(lambda (n) (drop-after d n)) raw-dup-free)))
+  (let* ((raw-results (warning-filter w f))
+	 (raw-dup-free (remove-duplicates raw-results :test #'string-equal :from-end t)))
+    (list
+     (cons 'output (mapcar #'(lambda (n) (drop-after d n)) raw-dup-free))
+     (cons 'raw-length (length raw-results))
+     (cons 'set-length (length raw-dup-free)))))
 
 (defun print-list (l)
   "Print every element in list L to a new line."
@@ -71,21 +75,26 @@
     :key :output)))
 
 (defun top-level/handler (cmd)
-  (let ((args (clingon:command-arguments cmd))
-	(input (clingon:getopt cmd :input))
+  (let ((input (clingon:getopt cmd :input))
 	(warning (clingon:getopt cmd :warning))
 	(drop (clingon:getopt cmd :drop))
 	(outfile (clingon:getopt cmd :output)))
-    (progn (format t "Total number of args ~A ~%" (length args))
-	   (format t "Will check for ~A in ~A ~%" warning input)
+    (progn (format t "Will check for ~A in ~A ~%" warning input)
 	   (let ((output (duplicate-free-warnings warning input drop)))
 	     (progn
-	       (format t "Found ~A occurrences of ~A in the input file.~%" (length output) warning)
+	       (let* ((raw-count (cdr (assoc 'raw-length output)))
+		      (set-count (cdr (assoc 'set-length output)))
+		      (unique-rate (/ set-count raw-count 1.0)))
+		 (format t "Found ~A occurrences of ~A in the input file of which ~A are unique (~A%).~%"
+			 raw-count
+			 warning
+			 set-count
+			 (* 100 unique-rate)))
 	       (if outfile
 		   (progn
 		     (format t "Dropping results to ~A~%" outfile)
-		     (save-list outfile output)))
-	       (print-list output))))))
+		     (save-list outfile (cdr (assoc 'output output)))))
+	       (print-list (cdr (assoc 'output output))))))))
 
 ;; main entry point
 (defun main ()
