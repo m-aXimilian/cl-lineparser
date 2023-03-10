@@ -3,6 +3,24 @@
   (:export :main))
 (in-package :buildwarning-parser)
 
+(defun warning-filter-tmp-file (w f)
+  "Name of the warning W  and input file F. Returns a list holding every line in F that contains W."
+  (let ((o 0))
+    (with-open-file (in f :direction :input :external-format :iso-8859-1)
+      (progn
+	(with-open-file (out "tmp" :direction :output :if-exists :append :if-does-not-exist :create)
+	  (do ((line (read-line in nil)
+		     (read-line in nil)))
+	      ((null line))
+	    (if (not (eq (search w line) nil))
+		;;(push line o)
+		(progn
+		  (format out "~A~%" line)
+		  (incf o)
+		  )
+		))))
+      o)))
+
 (defun warning-filter (w f)
   "Name of the warning W  and input file F. Returns a list holding every line in F that contains W."
   (let ((o '()))
@@ -84,7 +102,9 @@
 	     (progn
 	       (let* ((raw-count (cdr (assoc 'raw-length output)))
 		      (set-count (cdr (assoc 'set-length output)))
-		      (unique-rate (/ set-count raw-count 1.0)))
+		      (unique-rate (if (> raw-count 0)
+				       (/ set-count raw-count 1.0)
+				       0)))
 		 (format t "Found ~A occurrences of ~A in the input file of which ~A are unique (~A%).~%"
 			 raw-count
 			 warning
