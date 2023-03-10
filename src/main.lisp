@@ -4,7 +4,7 @@
 (in-package :buildwarning-parser)
 
 (defun warning-filter-tmp-file (w f)
-  "Name of the warning W  and input file F. Returns a list holding every line in F that contains W."
+  "Name of the warning W  and input file F. Returns the number holding of findings of W in F."
   (let ((o 0))
     (with-open-file (in f :direction :input :external-format :iso-8859-1)
       (progn
