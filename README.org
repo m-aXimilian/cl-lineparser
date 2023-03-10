@@ -24,7 +24,7 @@ The executable accepts 2 commandline options via ~-w~ (warning id) and ~i~ (the 
 
 e.g.:
 #+begin_src sh
-  ./buildwarning-parser.exe -w CA2016 -i ../static/ca2016-secondfix
+  ./buildwarning-parser.exe -w CA2016 -i /path/to/inputfile
 #+end_src
 
 ** Building
