@@ -47,5 +47,16 @@ e.g.:
      ;; (sb-ext:save-lisp-and-die #P"d:/Projects/buildwarning-parser/build/buildwarning-parser" :toplevel #'buildwarning-parser:main :executable t)
    #+end_src
    
+** Makefile                                                       :noexport:
+#+begin_src makefile
+  LISP ?= sbcl
 
+  build:
+  $(LISP) --eval '(asdf:load-asd (merge-pathnames (uiop/os:getcwd) "buildwarning-parser.asd"))' \
+  --eval '(ql:quickload :buildwarning-parser)' \
+  --eval '(asdf:make :buildwarning-parser)' \
+  --eval '(quit)'
+#+end_src
+
+	
 
