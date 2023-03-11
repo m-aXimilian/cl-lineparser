@@ -17,7 +17,7 @@
   :author ""
   :license ""
   :depends-on ("buildwarning-parser"
-               "rove")
+               "fiveam")
   :components ((:module "tests"
                 :components
                 ((:file "main"))))
