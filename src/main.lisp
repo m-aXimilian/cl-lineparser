@@ -83,7 +83,7 @@
     :key :warning)
    (clingon:make-option
     :string
-    :description "The string after which the rest of the line is dropped."
+    :description "The string after which the rest of the line is dropped. Ignored if nothing is specified."
     :short-name #\d
     :long-name "drop"
     :key :drop)
