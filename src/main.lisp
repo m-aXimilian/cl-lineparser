@@ -36,12 +36,15 @@
   "In input string I, drop everything after string S."
   (subseq i 0 (+ 1 (position s i :test #'string-equal))))
 
-(defun duplicate-free-warnings (w f d)
+(defun duplicate-free-warnings (w f &optional d)
   "Uses the list of warning-filter based on warning W and input file F, removes duplicates in this, and drops everything in the output list after string D."
   (let* ((raw-results (warning-filter w f))
 	 (raw-dup-free (remove-duplicates raw-results :test #'string-equal :from-end t)))
     (list
-     (cons 'output (mapcar #'(lambda (n) (drop-after d n)) raw-dup-free))
+     (cons 'output
+	   (if d
+	       (mapcar #'(lambda (n) (drop-after d n)) raw-dup-free)
+	       raw-dup-free))
      (cons 'raw-length (length raw-results))
      (cons 'set-length (length raw-dup-free)))))
 
@@ -83,8 +86,7 @@
     :description "The string after which the rest of the line is dropped."
     :short-name #\d
     :long-name "drop"
-    :key :drop
-    :initial-value ")")
+    :key :drop)
    (clingon:make-option
     :string
     :description "The outputfile to store the results in."
