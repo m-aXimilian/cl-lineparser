@@ -37,6 +37,7 @@ e.g.:
 #+begin_src sh
   ./buildwarning-parser -w CA2016 -i /path/to/inputfile -o /path/to/outputfile -d ")" -r
 #+end_src
+This will search for occurences of "CA2016" (~w~ tag) in the inputfile (~i~ tag) and drop all the findings cropped after the ")" character (~d~ tag) and without duplicates in the "outputfile" (~o~ tag). With the ~r~ tag, the raw findings will be preserved in "outputfile-raw".
 
 * Building
 ** With Makefile
