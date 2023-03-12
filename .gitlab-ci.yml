@@ -10,9 +10,7 @@ stages:
   - build
 
 before_script:
-  - curl -O https://beta.quicklisp.org/quicklisp.lisp
-  - sbcl --load quicklisp.lisp
-  - sbcl --eval '(quicklisp-quickstart:install)'
+  - install-quicklisp
 
 .test:
   stage: test
