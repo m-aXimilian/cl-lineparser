@@ -1,8 +1,9 @@
 #+startup: indent
-* Buildwarning-Parser 
+#+title: Buildwarning-Parser 
+
 A simple filter that finds occurrences of a sting in a textfile of many lines. It is doing its thing line-by-line, so the whole file is not bloated into memory. Text formatting is assumed to be ~iso-8859-1~.
 
-** Loading development environment
+* Loading development environment
 In a SLIME-repl do the following:
 #+begin_src lisp :exports code
   (asdf:load-asd #P"d:/Projects/buildwarning-parser/buildwarning-parser.asd") ;; or wherever the asd file is located
@@ -11,23 +12,42 @@ In a SLIME-repl do the following:
 #+end_src
 
 
-** Usage
-*** From the repl
+* Usage
+** From the repl
 The method ~duplicate-free-warnings~ can be used as an entry point directly. Pass it a string for the warning id and one for the path to the input file with all buildwarnings.
 #+begin_src lisp :exports code
   (duplicate-free-warnings "CA2016" "d:/buildwarnings/ca2016-secondfix")
 #+end_src
-*** From the commandline
-The executable accepts 2 commandline options via ~-w~ (warning id) and ~i~ (the input file with the complete buildresult output).
+** From the commandline
+The executable accepts the following commandline arguments
+ | short name | long name         | description                                                                              |
+ |-------+-------------------+------------------------------------------------------------------------------------------|
+ |       | --help            | display usage information and exit                                                       |
+ |       | --version         | display version and exit                                                                 |
+ | -d    | --drop <VALUE>    | The string after which the rest of the line is dropped. Ignored if nothing is specified. |
+ | -i    | --input <VALUE>   | The path to the input file with the buildoutput.                                         |
+ | -o    | --output <VALUE>  | The output file to store the results in.                                                 |
+ | -r    | --raw-results     | Save additional raw results, i.e., containing duplicates as well.                        |
+ | -w    | --warning <VALUE> | The warning key. (Some random string that gets filtered)                                 |
+
 
 ~w~ is basically any string, so this will filter any line in any file, that contains the warning id string.
 
 e.g.:
 #+begin_src sh
-  ./buildwarning-parser.exe -w CA2016 -i /path/to/inputfile
+  ./buildwarning-parser -w CA2016 -i /path/to/inputfile -o /path/to/outputfile -d ")" -r
 #+end_src
+This will search for occurences of "CA2016" (~w~ tag) in the inputfile (~i~ tag) and drop all the findings cropped after the ")" character (~d~ tag) and without duplicates in the "outputfile" (~o~ tag). With the ~r~ tag, the raw findings will be preserved in "outputfile-raw".
 
-** Building
+* Building
+** With Makefile
+In the directory of the Makefile, run 
+#+begin_src makefile
+  make
+#+end_src
+This will drop the executable in a the ~build~ subfolder.
+	
+** With REPL
 1. Start ~sbcl~ from the command line
    #+begin_src sh :exports code
      sbcl
@@ -47,16 +67,16 @@ e.g.:
      ;; (sb-ext:save-lisp-and-die #P"d:/Projects/buildwarning-parser/build/buildwarning-parser" :toplevel #'buildwarning-parser:main :executable t)
    #+end_src
    
-** Makefile                                                       :noexport:
-#+begin_src makefile
-  LISP ?= sbcl
 
-  build:
-  $(LISP) --eval '(asdf:load-asd (merge-pathnames (uiop/os:getcwd) "buildwarning-parser.asd"))' \
-  --eval '(ql:quickload :buildwarning-parser)' \
-  --eval '(asdf:make :buildwarning-parser)' \
-  --eval '(quit)'
+* Testing
+** With Makefile
+Run ~make test~ in the directory of the Makefile.
+** With REPL
+Do the following
+#+begin_src lisp
+  (asdf:load-asd #p"~/repos/buildwarning-parser/buildwarning-parser.asd")
+  (ql:quickload "buildwarning-parser/tests")
+  ;; make sure the the current working direcotry is set to <PROJECT_ROOT>/tests
+  ;; i.e. by pressing C-c-~ in SLIME
+  (run! 'bparser-main)
 #+end_src
-
-	
-

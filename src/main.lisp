@@ -45,6 +45,7 @@
 	   (if d
 	       (mapcar #'(lambda (n) (drop-after d n)) raw-dup-free)
 	       raw-dup-free))
+     (cons 'raw-results raw-results)
      (cons 'raw-length (length raw-results))
      (cons 'set-length (length raw-dup-free)))))
 
@@ -89,16 +90,23 @@
     :key :drop)
    (clingon:make-option
     :string
-    :description "The outputfile to store the results in."
+    :description "The output file to store the results in."
     :short-name #\o
     :long-name "output"
-    :key :output)))
+    :key :output)
+   (clingon:make-option
+    :boolean/true
+    :description "Save additional raw results, i.e., containing duplicates as well."
+    :short-name #\r
+    :long-name "raw-results"
+    :key :raw)))
 
 (defun top-level/handler (cmd)
   (let ((input (clingon:getopt cmd :input))
 	(warning (clingon:getopt cmd :warning))
 	(drop (clingon:getopt cmd :drop))
-	(outfile (clingon:getopt cmd :output)))
+	(outfile (clingon:getopt cmd :output))
+	(raw (clingon:getopt cmd :raw)))
     (progn (format t "Will check for ~A in ~A ~%" warning input)
 	   (let ((output (duplicate-free-warnings warning input drop)))
 	     (progn
@@ -115,8 +123,11 @@
 	       (if outfile
 		   (progn
 		     (format t "Dropping results to ~A~%" outfile)
-		     (save-list outfile (cdr (assoc 'output output)))))
+		     (save-list outfile (cdr (assoc 'output output)))
+		     (if raw
+			 (save-list (concatenate 'string outfile "-raw") (cdr (assoc 'raw-results output))))))
 	       (print-list (cdr (assoc 'output output))))))))
+
 
 ;; main entry point
 (defun main ()
