@@ -1,7 +1,7 @@
-(defpackage buildwarning-parser
+(defpackage line-parser
   (:use :cl :clingon)
   (:export :main))
-(in-package :buildwarning-parser)
+(in-package :line-parser)
 
 (defun warning-filter-tmp-file (w f)
   "Name of the warning W  and input file F. Returns the number holding of findings of W in F."
@@ -62,7 +62,7 @@
 
 (defun top-level/command ()
   (clingon:make-command
-   :name "buildwarning-parser"
+   :name "line-parser"
    :description "Parse a file of a dotnet build to generate a unique warning list. Attention: this will crash for very large numbers of results. The inputfilesize does not matter."
    :usage "[-w <WARNING>] [-i <INPUTFILE>] [-d <dropafter>] [-o <outputfilename>]"
    :options (top-level/options)

@@ -1,15 +1,15 @@
 LISP ?= sbcl --dynamic-space-size 2000 --noinform
 
 build:
-	$(LISP) --eval '(asdf:load-asd (merge-pathnames (uiop/os:getcwd) "buildwarning-parser.asd"))' \
-		--eval '(ql:quickload :buildwarning-parser)' \
-		--eval '(asdf:make :buildwarning-parser)' \
+	$(LISP) --eval '(asdf:load-asd (merge-pathnames (uiop/os:getcwd) "line-parser.asd"))' \
+		--eval '(ql:quickload :line-parser)' \
+		--eval '(asdf:make :line-parser)' \
 		--eval '(quit)'
 test:
-	$(LISP) --non-interactive --eval '(asdf:load-asd (merge-pathnames (uiop/os:getcwd) "buildwarning-parser.asd"))' \
+	$(LISP) --non-interactive --eval '(asdf:load-asd (merge-pathnames (uiop/os:getcwd) "line-parser.asd"))' \
 	--eval '(uiop:chdir (merge-pathnames (uiop/os:getcwd) "tests"))' \
-	--eval '(ql:quickload :buildwarning-parser/tests)' \
-	--eval '(in-package "BUILDWARNING-PARSER/TESTS/MAIN")' \
+	--eval '(ql:quickload :line-parser/tests)' \
+	--eval '(in-package "LINE-PARSER/TESTS/MAIN")' \
 	--eval '(in-suite bparser-main)' \
 	--eval '(run!)' \
 

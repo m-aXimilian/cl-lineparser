@@ -1,14 +1,15 @@
 #+startup: indent
-#+title: Buildwarning-Parser 
+#+title: Line Parser
+#+subtitle: For textfiles
 
 A simple filter that finds occurrences of a sting in a textfile of many lines. It is doing its thing line-by-line, so the whole file is not bloated into memory. Text formatting is assumed to be ~iso-8859-1~.
 
 * Loading development environment
 In a SLIME-repl do the following:
 #+begin_src lisp :exports code
-  (asdf:load-asd #P"d:/Projects/buildwarning-parser/buildwarning-parser.asd") ;; or wherever the asd file is located
-  ;; (asdf:load-system "buildwarning-parser") ;; not needed!
-  (ql:quickload "buildwarning-parser")
+  (asdf:load-asd #P"d:/Projects/line-parser/line-parser.asd") ;; or wherever the asd file is located
+  ;; (asdf:load-system "line-parser") ;; not needed!
+  (ql:quickload "line-parser")
 #+end_src
 
 
@@ -35,7 +36,7 @@ The executable accepts the following commandline arguments
 
 e.g.:
 #+begin_src sh
-  ./buildwarning-parser -w CA2016 -i /path/to/inputfile -o /path/to/outputfile -d ")" -r
+  ./line-parser -w CA2016 -i /path/to/inputfile -o /path/to/outputfile -d ")" -r
 #+end_src
 This will search for occurences of "CA2016" (~w~ tag) in the inputfile (~i~ tag) and drop all the findings cropped after the ")" character (~d~ tag) and without duplicates in the "outputfile" (~o~ tag). With the ~r~ tag, the raw findings will be preserved in "outputfile-raw".
 
@@ -54,17 +55,17 @@ This will drop the executable in a the ~build~ subfolder.
    #+end_src
 2. Load the asdf-system
    #+begin_src lisp  :exports code
-     (asdf:load-asd #P"d:/Projects/buildwarning-parser/buildwarning-parser.asd") ;; or wherever the asd file is located
+     (asdf:load-asd #P"d:/Projects/line-parser/line-parser.asd") ;; or wherever the asd file is located
    #+end_src
 3. Quickload it
    #+begin_src lisp :exports code
-     (ql:quickload "buildwarning-parser")   
+     (ql:quickload "line-parser")   
    #+end_src
 4. Use ~asdf:make~ or ~(sb-ext:save-lisp-and-die)~ to make an executable
    #+begin_src lisp :exports code
-     (asdf:make :buildwarning-parser)
+     (asdf:make :line-parser)
      ;; way easier via asdf...
-     ;; (sb-ext:save-lisp-and-die #P"d:/Projects/buildwarning-parser/build/buildwarning-parser" :toplevel #'buildwarning-parser:main :executable t)
+     ;; (sb-ext:save-lisp-and-die #P"d:/Projects/line-parser/build/line-parser" :toplevel #'line-parser:main :executable t)
    #+end_src
    
 
@@ -74,8 +75,8 @@ Run ~make test~ in the directory of the Makefile.
 ** With REPL
 Do the following
 #+begin_src lisp
-  (asdf:load-asd #p"~/repos/buildwarning-parser/buildwarning-parser.asd")
-  (ql:quickload "buildwarning-parser/tests")
+  (asdf:load-asd #p"~/repos/line-parser/line-parser.asd")
+  (ql:quickload "line-parser/tests")
   ;; make sure the the current working direcotry is set to <PROJECT_ROOT>/tests
   ;; i.e. by pressing C-c-~ in SLIME
   (run! 'bparser-main)

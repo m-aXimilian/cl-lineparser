@@ -1,4 +1,4 @@
-(defsystem "buildwarning-parser"
+(defsystem "line-parser"
   :version "0.1.0"
   :author ""
   :license ""
@@ -9,17 +9,17 @@
                 ((:file "main"))))
   :description ""
   :build-operation "program-op"
-  :build-pathname "build/buildwarning-parser"
-  :entry-point "buildwarning-parser:main"
-  :in-order-to ((test-op (test-op "buildwarning-parser/tests"))))
+  :build-pathname "build/line-parser"
+  :entry-point "line-parser:main"
+  :in-order-to ((test-op (test-op "line-parser/tests"))))
 
-(defsystem "buildwarning-parser/tests"
+(defsystem "line-parser/tests"
   :author ""
   :license ""
-  :depends-on ("buildwarning-parser"
+  :depends-on ("line-parser"
                "fiveam")
   :components ((:module "tests"
                 :components
                 ((:file "main"))))
-  :description "Test system for buildwarning-parser"
+  :description "Test system for line-parser"
   :perform (test-op (op c) (symbol-call :rove :run c)))
