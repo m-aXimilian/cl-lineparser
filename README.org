@@ -2,6 +2,10 @@
 #+title: Line Parser
 #+subtitle: For textfiles
 
+#+begin_export html
+ <a href="https://gitlab.com/m-aXimilian/buildwarning-parser/-/commits/master"><img alt="coverage report" src="https://gitlab.com/m-aXimilian/buildwarning-parser/badges/master/coverage.svg" /></a> 
+#+end_export
+
 A simple filter that finds occurrences of a sting in a textfile of many lines. It is doing its thing line-by-line, so the whole file is not bloated into memory. Text formatting is assumed to be ~iso-8859-1~.
 
 * Loading development environment
