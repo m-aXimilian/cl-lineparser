@@ -26,10 +26,8 @@ build:
   stage: build
   variables:
     LISP: sbcl
-  only:
-    - tags
   script:
     - make build
   artifacts:
     paths:
-      - build/line-parser
+      - line-parser
