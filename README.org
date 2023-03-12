@@ -4,7 +4,7 @@
 
 
 
-[[https://gitlab.com/m-aXimilian/buildwarning-parser/badges/master/coverage.svg]]
+[[https://gitlab.com/m-aXimilian/buildwarning-parser/badges/master/pipeline.svg]]
 
 
 A simple filter that finds occurrences of a sting in a textfile of many lines. It is doing its thing line-by-line, so the whole file is not bloated into memory. Text formatting is assumed to be ~iso-8859-1~.
