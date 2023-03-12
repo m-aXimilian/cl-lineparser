@@ -10,8 +10,8 @@ stages:
   - build
 
 before_script:
-  - install-quicklisp
-  - git clone https://github.com/foo/bar ~/quicklisp/local-projects/
+  - curl -O https://beta.quicklisp.org/quicklisp.lisp
+  - sbcl --load quicklisp.lisp
 
 .test:
   stage: test
