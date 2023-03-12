@@ -30,4 +30,4 @@ build:
     - make build
   artifacts:
     paths:
-      - line-parser
+      - build/line-parser
