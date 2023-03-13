@@ -13,7 +13,6 @@ A simple filter that finds occurrences of a string in a textfile of many lines. 
 In a SLIME-repl do the following:
 #+begin_src lisp :exports code
   (asdf:load-asd #P"d:/Projects/line-parser/line-parser.asd") ;; or wherever the asd file is located
-  ;; (asdf:load-system "line-parser") ;; not needed!
   (ql:quickload "line-parser")
 #+end_src
 
@@ -27,14 +26,15 @@ The method ~duplicate-free-warnings~ can be used as an entry point directly. Pas
 ** From the commandline
 The executable accepts the following commandline arguments
  | short name | long name         | description                                                                              |
- |-------+-------------------+------------------------------------------------------------------------------------------|
- |       | --help            | display usage information and exit                                                       |
- |       | --version         | display version and exit                                                                 |
- | -d    | --drop <VALUE>    | The string after which the rest of the line is dropped. Ignored if nothing is specified. |
- | -i    | --input <VALUE>   | The path to the input file with the buildoutput.                                         |
- | -o    | --output <VALUE>  | The output file to store the results in.                                                 |
- | -r    | --raw-results     | Save additional raw results, i.e., containing duplicates as well.                        |
- | -w    | --warning <VALUE> | The warning key. (Some random string that gets filtered)                                 |
+ |------------+-------------------+------------------------------------------------------------------------------------------|
+ |            | --help            | display usage information and exit                                                       |
+ |            | --version         | display version and exit                                                                 |
+ | -d         | --drop <VALUE>    | The string after which the rest of the line is dropped. Ignored if nothing is specified. |
+ | -i         | --input <VALUE>   | The path to the input file with the buildoutput.                                         |
+ | -o         | --output <VALUE>  | The output file to store the results in.                                                 |
+ | -r         | --raw-results     | Save additional raw results, i.e., containing duplicates as well.                        |
+ | -s         | --silent          | Run silent. Don't print results to the standard output.                                  |
+ | -w         | --warning <VALUE> | The warning key. (Some random string that gets filtered)                                 |
 
 
 ~w~ is basically any string, so this will filter any line in any file, that contains the warning id string.
