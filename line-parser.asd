@@ -6,7 +6,10 @@
   :components ((:module "src"
 		:pathname #P"src/"
                 :components
-                ((:file "main"))))
+                ((:file "package")
+		 (:file "main")
+		 (:file "parser")
+		 (:file "commandline"))))
   :description ""
   :build-operation "program-op"
   :build-pathname "build/line-parser"
