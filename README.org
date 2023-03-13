@@ -13,7 +13,6 @@ A simple filter that finds occurrences of a string in a textfile of many lines. 
 In a SLIME-repl do the following:
 #+begin_src lisp :exports code
   (asdf:load-asd #P"d:/Projects/line-parser/line-parser.asd") ;; or wherever the asd file is located
-  ;; (asdf:load-system "line-parser") ;; not needed!
   (ql:quickload "line-parser")
 #+end_src
 
