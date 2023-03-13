@@ -1,4 +1,4 @@
-LISP ?= sbcl --dynamic-space-size 2000 --noinform
+LISP ?= sbcl --noinform
 
 build:
 	$(LISP) --eval '(asdf:load-asd (merge-pathnames (uiop/os:getcwd) "line-parser.asd"))' \
