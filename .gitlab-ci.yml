@@ -1,5 +1,4 @@
 variables:
-  IMAGE_TAG: latest
   QUICKLISP_ADD_TO_INIT_FILE: "true"
   QUICKLISP_DIST_VERSION: latest
 
@@ -17,19 +16,33 @@ before_script:
   script:
     - make test
 
-sbcl test:
-  extends: .test
-  variables:
-    LISP: sbcl
-
-build:
+.build:
   stage: build
-  variables:
-    LISP: sbcl
   script:
     - make build
   only:
     - tags
+
+sbcl test:
+  extends: .test
+  variables:
+    LISP: sbcl
+    IMAGE_TAG: latest
+
+linux build:
+  extends: .build
+  variables:
+    LISP: sbcl
+    IMAGE_TAG: latest
   artifacts:
     paths:
       - build/line-parser
+
+windows build:
+  extends: .build
+  variables:
+    LISP: sbcl
+    IMAGE_TAG: latest-windowsservercore
+  artifacts:
+    paths:
+      - build/line-parser-windows
