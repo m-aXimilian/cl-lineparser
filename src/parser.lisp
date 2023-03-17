@@ -31,7 +31,10 @@
 
 (defun drop-after (s i)
   "In input string I, drop everything after string S."
-  (subseq i 0 (+ 1 (position s i :test #'string-equal))))
+  (let ((index-s (position s i :test #'string-equal)))
+    (if (null index-s)
+	i
+	(subseq i 0 (+ 1 index-s)))))
 
 (defun duplicate-free-warnings (w f &optional d)
   "Uses the list of warning-filter based on warning W and input file F, removes duplicates in this, and drops everything in the output list after string D."
