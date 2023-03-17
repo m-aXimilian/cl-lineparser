@@ -48,6 +48,16 @@
     (is (= raw-raw-length dup-raw-length))
     (is (= raw-set-length dup-set-length))))
 
+(test valid-output-despite-no-drop-found
+  "Even if not every line contains the drop character D, the count of results should be the same
+as if there was no attempt to drop parts of a line."
+  (let* ((dup-free-list-wo-d (line-parser::duplicate-free-warnings ")" *testfile1*))
+	 (dup-free-list-drop (line-parser::duplicate-free-warnings ")" *testfile1* "y"))
+	 (line-lenghts-wo-d (check-line-lengths (cdr (assoc 'line-parser::output dup-free-list-wo-d))))
+	 (line-lengths-drop (check-line-lengths (cdr (assoc 'line-parser::output dup-free-list-drop)))))
+    (is-false (equal line-lenghts-wo-d line-lengths-drop))
+    (is (= (length line-lenghts-wo-d) (length line-lengths-drop)))))
+
 ;; helpers
 (defun check-line-lengths (l)
   "Given a list of strings L, create a list with the length of each string in L."
