@@ -31,5 +31,6 @@ build:
   only:
     - tags
   artifacts:
+    expire_in: 30 days
     paths:
       - build/line-parser
