@@ -39,12 +39,13 @@
 (defun duplicate-free-warnings (w f &optional d)
   "Uses the list of warning-filter based on warning W and input file F, removes duplicates in this, and drops everything in the output list after string D."
   (let* ((raw-results (warning-filter w f))
-	 (raw-dup-free (remove-duplicates raw-results :test #'string-equal :from-end t)))
-    (list
-     (cons 'output
+	 (raw-dup-free ;; (remove-duplicates raw-results :test #'string-equal :from-end t)
 	   (if d
-	       (mapcar #'(lambda (n) (drop-after d n)) raw-dup-free)
-	       raw-dup-free))
+	       (remove-duplicates (mapcar #'(lambda (n) (drop-after d n)) raw-results) :test #'string-equal :from-end t)
+	       (remove-duplicates raw-results :test #'string-equal :from-end t))
+	   ))
+    (list
+     (cons 'output raw-dup-free)
      (cons 'raw-results raw-results)
      (cons 'raw-length (length raw-results))
      (cons 'set-length (length raw-dup-free)))))

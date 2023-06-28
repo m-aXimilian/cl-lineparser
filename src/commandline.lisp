@@ -4,7 +4,7 @@
   (clingon:make-command
    :name "line-parser"
    :description "Parse a file of a dotnet build to generate a unique warning list. Attention: this will crash for very large numbers of results. The inputfilesize does not matter."
-   :usage "[-w <WARNING>] [-i <INPUTFILE>] [-d <dropafter>] [-o <outputfilename>]"
+   :usage "[-w <WARNING>] [-i <INPUTFILE>] [-d <dropafter>] [-o <outputfilename>] [-r] [-s]"
    :options (top-level/options)
    :handler #'top-level/handler))
 
