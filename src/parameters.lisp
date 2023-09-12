@@ -1,6 +1,6 @@
 (in-package :line-parser)
 
-(defparameter warning-list-config-file (truename "../static/WarningList"))
+(defparameter warning-list-config-file (asdf:system-relative-pathname "line-parser" "static/WarningList"))
 
 (defparameter warning-list
   (with-open-file (s warning-list-config-file :direction :input :if-does-not-exist :error)
