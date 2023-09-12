@@ -82,7 +82,7 @@
 ;; Example call:
 ;; (save-all-warnings-with-filtered-output #P"d:/buildwarnings/filtered-output-tst.csv" (check-all-warnings #P"d:/buildwarnings/releasebuild-2023-09-05.txt") file-filter-regexp)
 (defun save-all-warnings-with-filtered-output (f all-warns regex-string)
-  "Saves parse outputs to a file F with a list of warnings ALL-WARNS and filters the raw output per warning with the REGEX-STRING."
+  "Saves and parses a batch of outputs from `check-all-warnings' to a file F. The outputs of each cons-cell in ALL-WARNS is filtered with the REGEX-STRING before it gets written to the output file F."
   (with-open-file (s f :direction :output :if-exists :supersede)
     (format s "key;raw count;unique count;locations~%")
     (dolist (w all-warns)
