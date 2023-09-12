@@ -1,3 +1,3 @@
 (defpackage line-parser
-  (:use :cl :clingon)
+  (:use :cl :clingon :cl-ppcre)
   (:export :main))

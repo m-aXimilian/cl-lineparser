@@ -1,13 +1,15 @@
 (defsystem "line-parser"
-  :version "0.1.0"
+  :version "0.6.0"
   :author ""
   :license ""
-  :depends-on (:clingon)
+  :depends-on (:clingon
+	       :cl-ppcre)
   :components ((:module "src"
 		:pathname #P"src/"
                 :components
                 ((:file "package")
 		 (:file "main")
+		 (:file "parameters")
 		 (:file "parser")
 		 (:file "commandline"))))
   :description ""
