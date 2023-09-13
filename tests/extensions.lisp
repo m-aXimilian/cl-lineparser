@@ -1,7 +1,8 @@
 (in-package :line-parser/tests)
 
-(def-suite lparser-extensions)
-(in-suite lparser-extensions)
+(def-suite* lparser-extensions
+  :in lparser
+  :description "Testing for high(er) level wrappers of the parsing component of `line-parser'.")
 
 (test extract-from-strings-base
   (let* ((input-list (with-open-file (s *testfile2* :direction :input)

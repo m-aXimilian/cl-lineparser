@@ -1,9 +1,11 @@
 (in-package :line-parser/tests)
 
-(def-suite lparser-main
-  :description "Global tests for the line parser.")
+(def-suite lparser
+  :description "Testing the parsing components of `line-parser'.")
 
-(in-suite lparser-main)
+(def-suite* lparser-main
+  :in lparser
+  :description "Global tests for the line parser.")
 
 (test drop-after-base
   (let ((input "the fist e passed")
