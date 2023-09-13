@@ -72,6 +72,25 @@
 		(push (cons parsed 1) results))))))
     results))
 
+(defun filter-all-found-warnings/errors (f s)
+  "Returns a list wher the first list is the statistics of the whole file F based on the key S, and the second list is the findings alist based on `check-all-warnings'."
+  (let* ((filter-key (cond
+		      ((eq s 'error) ": error")
+		      ((eq s 'warning) ": warning")
+		      (t (error "Key for s not known. must be 'error or 'warning"))))
+	 (found-keys (extract-from-strings (cdr (assoc 'output (duplicate-free-warnings filter-key f)))))
+	 (tmp-file (asdf:system-relative-pathname "line-parser" (format nil "static/tmp-~a" (sxhash (get-decoded-time))))))
+    (with-open-file (s tmp-file :direction :output :if-does-not-exist :create)
+      (print (mapcar #'car found-keys) s))
+    (let ((warning-list-file warning-list-config-file))
+      (setf warning-list-config-file tmp-file)
+      (change-warning-list)
+      (let ((found-items-alist (check-all-warnings f)))
+	(setf warning-list-config-file warning-list-file)
+	(change-warning-list)
+	(uiop:delete-file-if-exists tmp-file)
+	(list found-keys found-items-alist)))))
+
 (defun save-all-warnings-statistic-results (f all-warns)
   "Drops the results in ALL-WARNS to file F."
   (with-open-file (s f :direction :output :if-does-not-exist :create :if-exists :supersede)
@@ -79,8 +98,6 @@
     (dolist (warn all-warns)
       (format s "~a,~d,~d~%" (car warn) (cdr (assoc 'raw-length (cdr warn))) (cdr (assoc 'set-length (cdr warn)))))))
 
-;; Example call:
-;; (save-all-warnings-with-filtered-output #P"d:/buildwarnings/filtered-output-tst.csv" (check-all-warnings #P"d:/buildwarnings/releasebuild-2023-09-05.txt") file-filter-regexp)
 (defun save-all-warnings-with-filtered-output (f all-warns regex-string)
   "Saves and parses a batch of outputs from `check-all-warnings' to a file F. The outputs of each cons-cell in ALL-WARNS is filtered with the REGEX-STRING before it gets written to the output file F."
   (with-open-file (s f :direction :output :if-exists :supersede)

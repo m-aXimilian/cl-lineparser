@@ -7,7 +7,7 @@ When this parameter was altered, call `change-warning-list' to signal a change t
 
 (defparameter warning-list
   (with-open-file (s warning-list-config-file :direction :input :if-does-not-exist :error)
-    (eval (read s)))
+    (read s))
   "The list of warning strings defined in the `warning-list-config-file'.")
 
 (defparameter file-filter-regexp "[A-Za-z0-9.]*\\.cs\\([0-9]*\\,[0-9]*\\)"
@@ -20,4 +20,4 @@ When this parameter was altered, call `change-warning-list' to signal a change t
   "Updat the `warning-list' parameter based on `warning-list-config-file'."
   (if (uiop:file-exists-p warning-list-config-file)
       (with-open-file (s warning-list-config-file :direction :input :if-does-not-exist :error)
-	(setf warning-list (eval (read s))))))
+	(setf warning-list (read s)))))
