@@ -9,9 +9,8 @@ test:
 	$(LISP) --non-interactive --eval '(asdf:load-asd (merge-pathnames (uiop/os:getcwd) "line-parser.asd"))' \
 	--eval '(uiop:chdir (merge-pathnames (uiop/os:getcwd) "tests"))' \
 	--eval '(ql:quickload :line-parser/tests)' \
-	--eval '(in-package "LINE-PARSER/TESTS/MAIN")' \
-	--eval '(in-suite bparser-main)' \
-	--eval '(run!)' \
+	--eval '(in-package "LINE-PARSER/TESTS")' \
+	--eval '(run-all-tests)' \
 
 clean:
 	rm -rf build

@@ -25,6 +25,9 @@
                "fiveam")
   :components ((:module "tests"
                 :components
-                ((:file "main"))))
+                ((:file "package")
+		 (:file "testparameters")
+		 (:file "main")
+		 (:file "extensions"))))
   :description "Test system for line-parser"
   :perform (test-op (op c) (symbol-call :rove :run c)))

@@ -1,16 +1,16 @@
-(defpackage line-parser/tests/main
-  (:use :cl
-        :line-parser
-        :fiveam))
-(in-package :line-parser/tests/main)
+(in-package :line-parser/tests)
 
-
-(defparameter *testfile1* (merge-pathnames (uiop/os:getcwd) "testfile1"))
-
-(def-suite bparser-main
+(def-suite lparser-main
   :description "Global tests for the line parser.")
 
-(in-suite bparser-main)
+(in-suite lparser-main)
+
+(test drop-after-base
+  (let ((input "the fist e passed")
+	(output-e "the")
+	(output-p "the fist e p"))
+    (is (equal (line-parser::drop-after "e" input) output-e))
+    (is (equal (line-parser::drop-after "p" input) output-p))))
 
 (test warning-filter-without-drop-correct-output-size
   "The raw output contains all findings of the search character."
