@@ -27,6 +27,7 @@
                 :components
                 ((:file "package")
 		 (:file "testparameters")
+		 (:file "helpers")
 		 (:file "main")
 		 (:file "extensions"))))
   :description "Test system for line-parser"

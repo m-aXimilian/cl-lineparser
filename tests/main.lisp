@@ -59,13 +59,3 @@ as if there was no attempt to drop parts of a line."
 	 (line-lengths-drop (check-line-lengths (cdr (assoc 'line-parser::output dup-free-list-drop)))))
     (is-false (equal line-lenghts-wo-d line-lengths-drop))
     (is (= (length line-lenghts-wo-d) (length line-lengths-drop)))))
-
-;; helpers
-(defun check-line-lengths (l)
-  "Given a list of strings L, create a list with the length of each string in L."
-  (let ((lengths '()))
-    (dolist (line l)
-      (push (length line) lengths))
-    lengths))
-
-
