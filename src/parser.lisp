@@ -73,7 +73,7 @@
     results))
 
 (defun filter-all-found-warnings/errors (f s)
-  "Returns a list wher the first list is the statistics of the whole file F based on the key S, and the second list is the findings alist based on `check-all-warnings'."
+  "Returns a list where the first list is the statistics of the whole file F based on the key S, and the second list is the findings alist based on `check-all-warnings'."
   (let* ((filter-key (cond
 		      ((eq s 'error) ": error")
 		      ((eq s 'warning) ": warning")
