@@ -84,5 +84,5 @@ Do the following
   (ql:quickload "line-parser/tests")
   ;; make sure the the current working direcotry is set to <PROJECT_ROOT>/tests
   ;; i.e. by pressing C-c-~ in SLIME
-  (run! 'bparser-main)
+  (run! 'lparser)
 #+end_src
