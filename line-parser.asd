@@ -1,7 +1,8 @@
 (defsystem "line-parser"
   :version "0.6.0"
-  :author ""
-  :license ""
+  :author "Maximilian Kueffner"
+  :mailto "kueffnermax@gmail.com"
+  :license "zlib"
   :depends-on (:clingon
 	       :cl-ppcre)
   :components ((:module "src"
@@ -19,8 +20,8 @@
   :in-order-to ((test-op (test-op "line-parser/tests"))))
 
 (defsystem "line-parser/tests"
-  :author ""
-  :license ""
+  :author "Maximilian Kueffner"
+  :license "zlib"
   :depends-on ("line-parser"
                "fiveam")
   :components ((:module "tests"
