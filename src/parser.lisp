@@ -91,6 +91,30 @@
 	(uiop:delete-file-if-exists tmp-file)
 	(list found-keys found-items-alist)))))
 
+(defun compare-filtered-statistics (b a)
+  "Comapres the before B and and after A (both should be results from `filter-all-found-warnings/errors')."
+  (let ((o '()))
+    (dolist (e (car b))
+      (let* ((key (car e))
+	     (before-count (cdr e))
+	     (after-count (let ((af (assoc key (car a) :test 'equal)))
+			    (if af
+				(cdr af)
+				0))))
+	(push (cons key `(,(cons 'before before-count) ,(cons 'after after-count))) o)))
+    o))
+
+(defun save-compared-results (f cmp)
+  "Saves the statistics output of `compare-filtered-statistics' CMP to the file F."
+  (with-open-file (s f :direction :output :if-exists :supersede)
+    (format s "warning, before, after~%")
+    (dolist (c cmp)
+      (let ((line (format nil "~a,~d,~d~%"
+			  (car c)
+			  (cdr (assoc 'before (cdr c)))
+			  (cdr (assoc 'after (cdr c))))))
+	(format s line)))))
+
 (defun save-all-warnings-statistic-results (f all-warns)
   "Drops the results in ALL-WARNS to file F."
   (with-open-file (s f :direction :output :if-does-not-exist :create :if-exists :supersede)
