@@ -1,18 +1,16 @@
-(in-package :line-parser/tests)
+(defpackage line-parser/tests/main
+  (:use :cl
+        :line-parser
+        :fiveam))
+(in-package :line-parser/tests/main)
 
-(def-suite lparser
-  :description "Testing the parsing components of `line-parser'.")
 
-(def-suite* lparser-main
-  :in lparser
+(defparameter *testfile1* (merge-pathnames (uiop/os:getcwd) "testfile1"))
+
+(def-suite bparser-main
   :description "Global tests for the line parser.")
 
-(test drop-after-base
-  (let ((input "the fist e passed")
-	(output-e "the")
-	(output-p "the fist e p"))
-    (is (equal (line-parser::drop-after "e" input) output-e))
-    (is (equal (line-parser::drop-after "p" input) output-p))))
+(in-suite bparser-main)
 
 (test warning-filter-without-drop-correct-output-size
   "The raw output contains all findings of the search character."
@@ -59,3 +57,13 @@ as if there was no attempt to drop parts of a line."
 	 (line-lengths-drop (check-line-lengths (cdr (assoc 'line-parser::output dup-free-list-drop)))))
     (is-false (equal line-lenghts-wo-d line-lengths-drop))
     (is (= (length line-lenghts-wo-d) (length line-lengths-drop)))))
+
+;; helpers
+(defun check-line-lengths (l)
+  "Given a list of strings L, create a list with the length of each string in L."
+  (let ((lengths '()))
+    (dolist (line l)
+      (push (length line) lengths))
+    lengths))
+
+
